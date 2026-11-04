@@ -273,8 +273,6 @@ footer p{margin:0}
 
 <script src="config.js"></script>
 <script>
-/* ============ Config & Dynamic Sheet Fetch ============ */
-const SHEET_CSV = (window.MENU_CONFIG && window.MENU_CONFIG.sheet || "").trim() || "https://docs.google.com/spreadsheets/d/e/2PACX-1vSqSp_lMwLszHeu0-fy4pOtM6NahF7FL3F8gKDiGCJ5m4HGHjyWJSciotO1LThzRFSbbAPIEI-R7X3hq/pub?gid=0&single=true&output=csv";
 const CUR = "₺";
 const DEFAULTS = {wa:"905547899664", phone:"905513658867", open:"10ص", close:"9م", delivery:true, address:"Hal, 141. Cadde 79-75, 33020 Akdeniz/Mersin", map:"https://maps.app.goo.gl/qN9FQ45bSxXHHxtS8", instagram:"https://www.instagram.com/roastchicken.33?mdxt=MXhjdjU0Ym1rcWduaw==", facebook:"https://www.facebook.com/share/1Cas9ZZu4K/"};
 
@@ -318,7 +316,6 @@ function iconFor(name){
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k]}</svg>`;
 }
 
-/* ============ State ============ */
 const $ = s => document.querySelector(s);
 const store = {get(k,d){try{const v=localStorage.getItem("roast:"+k);return v==null?d:JSON.parse(v);}catch(e){return d;}},
                set(k,v){try{localStorage.setItem("roast:"+k,JSON.stringify(v));}catch(e){}}};
@@ -346,51 +343,32 @@ function imgFail(el){ const m = el.src.match(/\/d\/([\w-]{20,})/);
   if (m && !el.dataset.tried){ el.dataset.tried = 1; el.src = `https://drive.google.com/thumbnail?id=${m[1]}&sz=w800`; return; }
   const box = el.closest(".thumb"); if (box) box.remove(); else el.remove(); }
 
-// دالة تحليل ملف الـ CSV القادم من جوجل شيت
 function parseCSV(text) {
-  let lines = [];
-  let row = [];
-  let inQuotes = false;
-  let currentField = "";
-  
+  let lines = [], row = [], inQuotes = false, currentField = "";
   for (let i = 0; i < text.length; i++) {
-    let c = text[i];
-    let nextC = text[i + 1];
+    let c = text[i], nextC = text[i + 1];
     if (c === '"') {
-      if (inQuotes && nextC === '"') {
-        currentField += '"';
-        i++;
-      } else {
-        inQuotes = !inQuotes;
-      }
+      if (inQuotes && nextC === '"') { currentField += '"'; i++; }
+      else { inQuotes = !inQuotes; }
     } else if (c === ',' && !inQuotes) {
-      row.push(currentField);
-      currentField = "";
+      row.push(currentField); currentField = "";
     } else if ((c === '\r' || c === '\n') && !inQuotes) {
       if (c === '\r' && nextC === '\n') { i++; }
       row.push(currentField);
       if (row.length > 1 || row[0] !== "") { lines.push(row); }
-      row = [];
-      currentField = "";
-    } else {
-      currentField += c;
-    }
+      row = []; currentField = "";
+    } else { currentField += c; }
   }
-  if (currentField !== "" || row.length > 0) {
-    row.push(currentField);
-    lines.push(row);
-  }
+  if (currentField !== "" || row.length > 0) { row.push(currentField); lines.push(row); }
   return lines;
 }
 
 function build(rows){
   const cats = [], cmap = {}; OPT = {};
   rows.forEach(r => {
-    // نتأكد أن السطر يحتوي على أعمدة كافية وألا يكون صف العنوان الرئيسي
     if (!r || r.length < 6) return;
     const [c, ct, n, nt, o, p, img] = r;
-    if (!c || c.trim() === "" || c.includes("القسم")) return; // تخطي رأس الصفحة
-    
+    if (!c || c.trim() === "" || c.includes("القسم")) return;
     if (!cmap[c]){ cmap[c] = {name:c, tr:ct||"", slug:"c"+cats.length, items:[], imap:{}}; cats.push(cmap[c]); }
     const cat = cmap[c]; if (!cat.tr && ct) cat.tr = ct;
     const key = hash(n+":"+(nt||""));
@@ -454,7 +432,6 @@ function toast(msg){
   const el = $("#toast"); el.textContent = msg; el.classList.add("show");
   setTimeout(()=>el.classList.remove("show"), 1800);
 }
-
 function findItem(slug){
   for(const c of CATS){ for(const it of c.items){ if (it.slug===slug) return it; } }
   return null;
@@ -624,8 +601,9 @@ function initUI(){
 
   $("#q").placeholder = L_.search;
 
-  // جلب البيانات مباشرة من جوجل شيت مع متغير الوقت لمنع الكاش
-  const freshUrl = `${SHEET_CSV}&t=${Date.now()}`;
+  const sheetUrl = (window.MENU_CONFIG && window.MENU_CONFIG.sheet) || "";
+  const freshUrl = `${sheetUrl}&t=${Date.now()}`;
+
   fetch(freshUrl)
     .then(res => res.text())
     .then(text => {
@@ -637,7 +615,7 @@ function initUI(){
     })
     .catch(err => {
       console.error("فشل جلب بيانات الشيت:", err);
-      $("#menu").innerHTML = `<div class="empty">عذراً، حدث خطأ في تحميل المنيو من جوجل شيت.</div>`;
+      $("#menu").innerHTML = `<div class="empty">عذراً، تأكد من إعدادات النشر لجوجل شيت.</div>`;
     });
 
   if(S.hours || S.open){
