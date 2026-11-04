@@ -564,5 +564,16 @@ if (SHEET_CSV){
     .catch(() => {});
 }
 <script>
+  // جلب البيانات مباشرة من رابط جوجل شيت المنشور مع كود منع التخزين المؤقت
+  const sheetUrl = (window.MENU_CONFIG && window.MENU_CONFIG.sheet) || "https://docs.google.com/spreadsheets/d/e/2PACX-1vSqSp_lMwLszHeu0-fy4pOtM6NahF7FL3F8gKDiGCJ5m4HGHjyWJSciotO1LThzRFSbbAPIEI-R7X3hq/pub?gid=0&single=true&output=csv";
+  
+  fetch(`${sheetUrl}&t=${Date.now()}`)
+    .then(response => response.text())
+    .then(text => {
+        // يمكنك هنا معالجة النص القادم من الشيت وعرضه ديناميكياً
+        console.log("تم جلب أحدث بيانات الشيت بنجاح");
+    })
+    .catch(error => console.error("خطأ في جلب بيانات الشيت:", error));
+</script>
 </body>
 </html>
