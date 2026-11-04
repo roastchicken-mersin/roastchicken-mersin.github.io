@@ -75,7 +75,6 @@ h1{margin:0;font-weight:400}
 .is-open .pdot{background:var(--green);box-shadow:0 0 0 3px rgba(122,194,58,.25)}
 .is-closed .pdot{background:var(--red)}
 
-
 /* ---------- Sticky nav ---------- */
 .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);margin-top:0;box-shadow:0 6px 16px rgba(20,22,21,.04)}
 .search{display:flex;align-items:center;gap:8px;margin-top:10px;background:var(--card-2);border:1px solid var(--line);border-radius:14px;padding-inline:12px}
@@ -274,15 +273,13 @@ footer p{margin:0}
 
 <script src="config.js"></script>
 <script>
-/* ============ Config ============ */
-const SHEET_CSV = (window.MENU_CONFIG && window.MENU_CONFIG.sheet || "").trim() || "";
-const ROWS = [["فروج", "Tavuk", "فروج بروستد", "Broasted Tavuk", "كامل", 600, ""], ["فروج", "Tavuk", "فروج بروستد", "Broasted Tavuk", "نصف", 300, ""], ["فروج", "Tavuk", "فروج مشوي", "Piliç Çevirme", "كامل", 400, ""], ["فروج", "Tavuk", "فروج مشوي", "Piliç Çevirme", "نصف", 225, ""], ["فروج", "Tavuk", "نصف فروج مشوي مع رز مندي", "Mandi Pilavlı Yarım Piliç Çevirme", "", 300, ""], ["سندويش شاورما", "Döner Dürüm", "سندويش شاورما", "Tavuk Döner Dürüm", "عادي", 120, ""], ["سندويش شاورما", "Döner Dürüm", "سندويش شاورما", "Tavuk Döner Dürüm", "دبل", 140, ""], ["سندويش شاورما", "Döner Dürüm", "سندويش شاورما إكسترا فطر وجبنة", "Mantarlı Kaşarlı Döner Dürüm", "", 170, ""], ["سندويش شاورما", "Döner Dürüm", "أصابع شاورما شامية", "Şam Usulü Parmak Döner", "", 80, ""], ["وجبات شاورما", "Döner Menüler", "شاورما عربي", "Arap Döner", "عادي", 225, ""], ["وجبات شاورما", "Döner Menüler", "شاورما عربي", "Arap Döner", "دبل", 350, ""], ["وجبات شاورما", "Döner Menüler", "شاورما عربي إكسترا فطر وجبنة", "Mantarlı Kaşarlı Arap Döner", "عادي", 275, ""], ["وجبات شاورما", "Döner Menüler", "شاورما عربي إكسترا فطر وجبنة", "Mantarlı Kaşarlı Arap Döner", "دبل", 450, ""], ["وجبات شاورما", "Döner Menüler", "شاورما إيطالي", "İtalyan Döner", "عادي", 300, ""], ["وجبات شاورما", "Döner Menüler", "شاورما إيطالي", "İtalyan Döner", "دبل", 500, ""], ["وجبات شاورما", "Döner Menüler", "شاورما بانيه", "Pane Döner", "عادي", 250, ""], ["وجبات شاورما", "Döner Menüler", "شاورما بانيه", "Pane Döner", "دبل", 400, ""], ["وجبات شاورما", "Döner Menüler", "وجبة شاورما ورز", "Pilavlı Döner Menü", "", 250, ""], ["وجبات شاورما", "Döner Menüler", "وجبة فرط 200 غرام", "Porsiyon Döner Menü (200 g)", "", 225, ""], ["شاورما فرط", "Kilo Döner", "شاورما فرط", "Döner", "1 كيلو", 750, ""], ["شاورما فرط", "Kilo Döner", "شاورما فرط", "Döner", "نصف كيلو", 375, ""], ["سندويش غربي", "Batı Dürümler", "سندويش سبايسي", "Spicy Dürüm", "عادي", 150, ""], ["سندويش غربي", "Batı Dürümler", "سندويش سبايسي", "Spicy Dürüm", "دبل", 170, ""], ["سندويش غربي", "Batı Dürümler", "سندويش كريسبي", "Crispy Dürüm", "عادي", 150, ""], ["سندويش غربي", "Batı Dürümler", "سندويش كريسبي", "Crispy Dürüm", "دبل", 170, ""], ["سندويش غربي", "Batı Dürümler", "سندويش نكيت", "Nugget Dürüm", "عادي", 150, ""], ["سندويش غربي", "Batı Dürümler", "سندويش نكيت", "Nugget Dürüm", "دبل", 170, ""], ["سندويش غربي", "Batı Dürümler", "سندويش مكسيكانو", "Mexicano Dürüm", "عادي", 170, ""], ["سندويش غربي", "Batı Dürümler", "سندويش مكسيكانو", "Mexicano Dürüm", "دبل", 200, ""], ["سندويش غربي", "Batı Dürümler", "سندويش بطاطا", "Patates Dürüm", "عادي", 80, ""], ["سندويش غربي", "Batı Dürümler", "سندويش بطاطا", "Patates Dürüm", "دبل", 100, ""], ["سندويش غربي", "Batı Dürümler", "سندويش سكالوب", "Escalope Dürüm", "", 180, ""], ["سندويش غربي", "Batı Dürümler", "سندويش شيش طاووق", "Şiş Tavuk Dürüm", "", 150, ""], ["سندويش غربي", "Batı Dürümler", "سندويش فاهيتا", "Fajita Dürüm", "", 200, ""], ["وجبات غربي", "Batı Menüleri", "وجبة سبايسي", "Spicy Menü", "عادي", 250, ""], ["وجبات غربي", "Batı Menüleri", "وجبة سبايسي", "Spicy Menü", "دبل", 400, ""], ["وجبات غربي", "Batı Menüleri", "وجبة كريسبي", "Crispy Menü", "عادي", 250, ""], ["وجبات غربي", "Batı Menüleri", "وجبة كريسبي", "Crispy Menü", "دبل", 400, ""], ["وجبات غربي", "Batı Menüleri", "وجبة نكيت", "Nugget Menü", "عادي", 250, ""], ["وجبات غربي", "Batı Menüleri", "وجبة نكيت", "Nugget Menü", "دبل", 400, ""], ["وجبات غربي", "Batı Menüleri", "وجبة سكالوب", "Escalope Menü", "عادي", 300, ""], ["وجبات غربي", "Batı Menüleri", "وجبة سكالوب", "Escalope Menü", "دبل", 500, ""], ["وجبات غربي", "Batı Menüleri", "وجبة مكسيكانو", "Mexicano Menü", "", 250, ""], ["وجبات غربي", "Batı Menüleri", "وجبة شيش طاووق", "Şiş Tavuk Menü", "", 250, ""], ["وجبات غربي", "Batı Menüleri", "وجبة فاهيتا جبنة", "Kaşarlı Fajita Menü", "", 300, ""], ["وجبات برغر", "Burger Menüler", "همبرغر لحم", "Et Burger", "عادي", 200, ""], ["وجبات برغر", "Burger Menüler", "همبرغر لحم", "Et Burger", "دبل", 300, ""], ["وجبات برغر", "Burger Menüler", "همبرغر لحم غنم", "Kuzu Burger", "عادي", 250, ""], ["وجبات برغر", "Burger Menüler", "همبرغر لحم غنم", "Kuzu Burger", "دبل", 400, ""], ["وجبات برغر", "Burger Menüler", "همبرغر كريسبي", "Crispy Burger", "عادي", 200, ""], ["وجبات برغر", "Burger Menüler", "همبرغر كريسبي", "Crispy Burger", "دبل", 300, ""], ["وجبات برغر", "Burger Menüler", "همبرغر سكالوب", "Escalope Burger", "عادي", 200, ""], ["وجبات برغر", "Burger Menüler", "همبرغر سكالوب", "Escalope Burger", "دبل", 300, ""], ["مقبلات", "Mezeler", "صحن بطاطا", "Patates Kızartması", "كبير", 160, ""], ["مقبلات", "Mezeler", "صحن بطاطا", "Patates Kızartması", "وسط", 120, ""], ["مقبلات", "Mezeler", "صحن بطاطا", "Patates Kızartması", "عادي", 60, ""], ["مقبلات", "Mezeler", "صحن رز", "Pilav", "كبير", 100, ""], ["مقبلات", "Mezeler", "صحن رز", "Pilav", "صغير", 40, ""], ["مقبلات", "Mezeler", "حمص", "Humus", "", 50, ""], ["مقبلات", "Mezeler", "متبل", "Mutebel", "", 50, ""], ["مقبلات", "Mezeler", "كريم توم", "Sarımsak Sosu", "1 كيلو", 160, ""], ["مقبلات", "Mezeler", "صوص حار", "Acı Sos", "1 كيلو", 160, ""], ["مشروبات", "İçecekler", "بيبسي", "Pepsi", "330 مل", 50, ""], ["مشروبات", "İçecekler", "بيبسي", "Pepsi", "1 لتر", 70, ""], ["مشروبات", "İçecekler", "بيبسي", "Pepsi", "2.5 لتر", 100, ""], ["مشروبات", "İçecekler", "فانتا", "Fanta", "330 مل", 50, ""], ["مشروبات", "İçecekler", "فانتا", "Fanta", "1 لتر", 70, ""], ["مشروبات", "İçecekler", "فانتا", "Fanta", "2.5 لتر", 100, ""], ["مشروبات", "İçecekler", "عيران كبير", "Büyük Ayran", "", 25, ""]];   // [القسم, القسم بالتركي, الصنف, الصنف بالتركي, الخيار, السعر, الصورة]
+/* ============ Config & Dynamic Sheet Fetch ============ */
+const SHEET_CSV = (window.MENU_CONFIG && window.MENU_CONFIG.sheet || "").trim() || "https://docs.google.com/spreadsheets/d/e/2PACX-1vSqSp_lMwLszHeu0-fy4pOtM6NahF7FL3F8gKDiGCJ5m4HGHjyWJSciotO1LThzRFSbbAPIEI-R7X3hq/pub?gid=0&single=true&output=csv";
 const CUR = "₺";
 const DEFAULTS = {wa:"905547899664", phone:"905513658867", open:"10ص", close:"9م", delivery:true, address:"Hal, 141. Cadde 79-75, 33020 Akdeniz/Mersin", map:"https://maps.app.goo.gl/qN9FQ45bSxXHHxtS8", instagram:"https://www.instagram.com/roastchicken.33?mdxt=MXhjdjU0Ym1rcWduaw==", facebook:"https://www.facebook.com/share/1Cas9ZZu4K/"};
 
 const T = {
   ar:{dir:"rtl", hi:"صحتين وعافية", tag:"فروج مشوي - بروستد - شاورما - برغر - وجبات غربية",
-
       search:"ابحث… شاورما، بروستد، برغر", n:k=>`${k} صنف`, none:q=>`ما في نتائج لـ «${q}». جرّب كلمة ثانية.`,
       open:c=>`مفتوح الآن · يسكّر ${c}`, closed:o=>`مسكّر حالياً · يفتح ${o}`, added:n=>`انضاف: ${n}`,
       bar:"عرض الطلب", cart:"طلبك", clear:"إفراغ", types:{table:"بالصالة",pickup:"استلام",delivery:"توصيل"},
@@ -293,7 +290,6 @@ const T = {
       contactH:"تواصل معنا", phone:"هاتف", wa:"واتساب", follow:"تابعونا", prices:"الأسعار بالليرة التركية وقد تتغير دون إشعار مسبق.",
       msgHead:"طلب جديد - Roast chicken", msgType:"نوع الطلب", msgTable:"طاولة", msgName:"الاسم", msgAddr:"العنوان", msgNote:"ملاحظات", msgTotal:"المجموع"},
   tr:{dir:"ltr", hi:"Afiyet olsun", tag:"Piliç Çevirme - Broasted - Döner - Burger - Batı Menüleri",
-
       search:"Ara… döner, broasted, burger", n:k=>`${k} ürün`, none:q=>`“${q}” için sonuç yok.`,
       open:c=>`Şu an açık · ${c}'de kapanır`, closed:o=>`Şu an kapalı · ${o}'da açılır`, added:n=>`Eklendi: ${n}`,
       bar:"Siparişi gör", cart:"Siparişiniz", clear:"Temizle", types:{table:"Masada",pickup:"Gel al",delivery:"Paket servis"},
@@ -350,219 +346,328 @@ function imgFail(el){ const m = el.src.match(/\/d\/([\w-]{20,})/);
   if (m && !el.dataset.tried){ el.dataset.tried = 1; el.src = `https://drive.google.com/thumbnail?id=${m[1]}&sz=w800`; return; }
   const box = el.closest(".thumb"); if (box) box.remove(); else el.remove(); }
 
+// دالة تحليل ملف الـ CSV القادم من جوجل شيت
+function parseCSV(text) {
+  let lines = [];
+  let row = [];
+  let inQuotes = false;
+  let currentField = "";
+  
+  for (let i = 0; i < text.length; i++) {
+    let c = text[i];
+    let nextC = text[i + 1];
+    if (c === '"') {
+      if (inQuotes && nextC === '"') {
+        currentField += '"';
+        i++;
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if (c === ',' && !inQuotes) {
+      row.push(currentField);
+      currentField = "";
+    } else if ((c === '\r' || c === '\n') && !inQuotes) {
+      if (c === '\r' && nextC === '\n') { i++; }
+      row.push(currentField);
+      if (row.length > 1 || row[0] !== "") { lines.push(row); }
+      row = [];
+      currentField = "";
+    } else {
+      currentField += c;
+    }
+  }
+  if (currentField !== "" || row.length > 0) {
+    row.push(currentField);
+    lines.push(row);
+  }
+  return lines;
+}
+
 function build(rows){
   const cats = [], cmap = {}; OPT = {};
   rows.forEach(r => {
+    // نتأكد أن السطر يحتوي على أعمدة كافية وألا يكون صف العنوان الرئيسي
+    if (!r || r.length < 6) return;
     const [c, ct, n, nt, o, p, img] = r;
+    if (!c || c.trim() === "" || c.includes("القسم")) return; // تخطي رأس الصفحة
+    
     if (!cmap[c]){ cmap[c] = {name:c, tr:ct||"", slug:"c"+cats.length, items:[], imap:{}}; cats.push(cmap[c]); }
     const cat = cmap[c]; if (!cat.tr && ct) cat.tr = ct;
-    let it = cat.imap[n];
-    if (!it){ it = cat.imap[n] = {n, t:nt||"", img:driveImg(img), opts:[], cat}; cat.items.push(it); }
-    if (!it.t && nt) it.t = nt; if (!it.img && img) it.img = driveImg(img);
-    const id = hash(c+"|"+n+"|"+(o||""));
-    const op = {id, o:o||"", p:+p, it}; it.opts.push(op); OPT[id] = op;
+    const key = hash(n+":"+(nt||""));
+    if (!cat.imap[key]){
+      const it = {n, t:nt||"", img:driveImg(img), opts:[], slug:cat.slug+"-"+cat.items.length};
+      cat.imap[key] = it; cat.items.push(it);
+    }
+    const item = cat.imap[key];
+    if (o) item.opts.push({o, p:Number(p)||0}); else item.opts.push({o:"", p:Number(p)||0});
+    if (o) OPT[o] = 1;
   });
-  for (const k in cart) if (!OPT[k]) delete cart[k];
+  CATS = cats;
+}
+
+function renderTabs(){
+  const html = CATS.map((c, i) => `<button class="tab" type="button" data-to="${c.slug}" ${i===0?'aria-current="true"':""}>${iconFor(c.name)}<span>${esc(cn(c))}</span></button>`).join("");
+  $("#tabs").innerHTML = html;
+}
+function renderMenu(filter=""){
+  const f = norm(filter);
+  const html = CATS.map(c => {
+    const items = c.items.filter(it => !f || norm(it.n).includes(f) || norm(it.t).includes(f) || norm(c.name).includes(f) || norm(c.tr).includes(f));
+    if (!items.length) return "";
+    return `<section class="board" id="${c.slug}">
+      <div class="bhead"><div class="ico">${iconFor(c.name)}</div><div class="btitle"><h2>${esc(cn(c))}</h2><div class="balt">${esc(c.tr)}</div></div><div class="cnt">${L().n(items.length)}</div></div>
+      <ul class="rows">
+        ${items.map(it => {
+          const id = it.slug;
+          return `<li class="row">
+            ${it.img?`<button class="thumb" type="button" data-img="${esc(it.img)}" data-name="${esc(nm(it))}" data-opts='${esc(JSON.stringify(it.opts))}'><img src="${esc(it.img)}" alt="" loading="lazy" onerror="imgFail(this)"></button>`:""}
+            <div class="nm"><b>${esc(nm(it))}</b><small>${esc(alt(it))}</small></div>
+            <div class="opts">
+              ${it.opts.map(op => {
+                const q = cart[id+":"+op.o]?.q || 0;
+                return `<button class="opt ${q>0?"on":""}" type="button" data-add="${id}" data-opt="${esc(op.o)}">
+                  ${op.o?`<span class="ol">${esc(ol(op.o))}</span>`:""}
+                  <span class="op">${money(op.p)}</span>
+                  <span class="plus">+</span>
+                  ${q>0?`<span class="qty">${q}</span>`:""}
+                </button>`;
+              }).join("")}
+            </div>
+          </li>`;
+        }).join("")}
+      </ul>
+    </section>`;
+  }).join("");
+  $("#menu").innerHTML = html || `<div class="empty">${esc(L().none(filter))}</div>`;
+}
+
+function updateCartUI(){
+  let n = 0, sum = 0;
+  for(const k in cart){ n += cart[k].q; sum += cart[k].p * cart[k].q; }
+  $("#cb-n").textContent = n;
+  $("#cb-l").textContent = L().bar;
+  $("#cb-s").textContent = money(sum);
+  $("#cartbar").hidden = n === 0;
   store.set("cart", cart);
-  return cats;
+}
+function toast(msg){
+  const el = $("#toast"); el.textContent = msg; el.classList.add("show");
+  setTimeout(()=>el.classList.remove("show"), 1800);
 }
 
-/* ============ Render ============ */
-const menu = $("#menu"), tabs = $("#tabs");
-function applyLang(){
-  const t = L(), d = document.documentElement;
-  d.lang = lang; d.dir = t.dir; document.body.style.direction = t.dir;
-  d.style.setProperty("--fade", t.dir==="rtl" ? "left" : "right");
-  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang===lang));
-  $("#t-hi").textContent = t.hi; $("#t-tag").textContent = t.tag; $("#q").placeholder = t.search;
-  // info from settings
-  $("#t-hours-h").textContent = t.hoursH; $("#t-addr-h").textContent = t.addrH; $("#t-contact-h").textContent = t.contactH;
-  $("#t-follow").textContent = t.follow; $("#t-prices").textContent = t.prices;
-  $("#f-hours").hidden = !(S.open && S.close); $("#t-hours").textContent = t.hours(S.open, S.close);
-  const mapHref = S.map || (S.address ? "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(S.address) : "");
-  $("#f-addr").hidden = !(S.address || S.map); $("#f-addr-t").textContent = S.address;
-  $("#f-map").hidden = !mapHref; $("#f-map").href = mapHref || "#"; $("#f-map").textContent = t.map;
-  $("#addr-pill").hidden = !(S.address && mapHref); $("#addr-pill").href = mapHref || "#"; $("#addr-t").textContent = S.address;
-  const cl = []; if (S.phone) cl.push(`${t.phone}: <span dir="ltr">${esc(S.phone)}</span>`); if (S.wa) cl.push(`${t.wa}: <span dir="ltr">${esc(S.wa)}</span>`);
-  $("#f-contact").hidden = !cl.length; $("#f-contact-t").innerHTML = cl.join("<br>");
-  const so = []; const url = (v, base) => /^https?:/.test(v) ? v : base + v.replace(/^@/,"");
-  if (S.instagram) so.push(`<a class="pill" target="_blank" rel="noopener" href="${esc(url(S.instagram,"https://instagram.com/"))}">Instagram</a>`);
-  if (S.facebook) so.push(`<a class="pill" target="_blank" rel="noopener" href="${esc(url(S.facebook,"https://facebook.com/"))}">Facebook</a>`);
-  $("#f-social").hidden = !so.length; $("#f-social-l").innerHTML = so.join("");
-  status(); drawTabs(); render($("#q").value); drawCart();
-}
-function drawTabs(){
-  tabs.innerHTML = CATS.map(c => `<button class="tab" type="button" data-slug="${c.slug}">${iconFor(c.name)}${esc(cn(c))}</button>`).join("");
-  fade();
-}
-function hl(s, q){ if (!q) return esc(s); const i = s.toLocaleLowerCase("tr").indexOf(q.toLocaleLowerCase("tr"));
-  return i < 0 ? esc(s) : esc(s.slice(0,i)) + "<mark>" + esc(s.slice(i,i+q.length)) + "</mark>" + esc(s.slice(i+q.length)); }
-function optBtn(op){
-  const q = cart[op.id]||0, lab = ol(op.o);
-  return `<button class="opt${q?" on":""}" type="button" data-add="${op.id}" aria-label="${esc(nm(op.it)+(lab?" "+lab:"")+" "+money(op.p))}">
-    <span class="lp">${lab?`<span class="ol">${esc(lab)}</span>`:""}<span class="op">${Number(op.p).toLocaleString("en-US")}<small>${CUR}</small></span></span>
-    <span class="plus">+</span>${q?`<span class="qty">${q}</span>`:""}</button>`;
-}
-function render(q){
-  const raw = (q||"").trim(), nq = norm(raw);
-  let html = "";
-  for (const c of CATS){
-    const items = nq ? c.items.filter(i => norm(i.n).includes(nq) || norm(i.t).includes(nq) || norm(c.name).includes(nq) || norm(c.tr).includes(nq)) : c.items;
-    if (!items.length) continue;
-    const other = lang==="tr" ? c.name : c.tr;
-    html += `<section class="board" id="${c.slug}" data-cat="${c.slug}">
-      <div class="bhead"><span class="ico">${iconFor(c.name)}</span>
-        <div class="btitle"><h2>${esc(cn(c))}</h2>${other?`<div class="balt">${esc(other)}</div>`:""}</div>
-        <span class="cnt">${L().n(items.length)}</span></div>
-      <ul class="rows">${items.map(it => `<li class="row">
-        ${it.img?`<button class="thumb" type="button" data-view="${it.opts[0].id}"><img src="${esc(it.img)}" alt="" loading="lazy" onerror="imgFail(this)"></button>`:""}
-        <div class="nm"><b>${hl(nm(it), raw)}</b>${alt(it)?`<small>${esc(alt(it))}</small>`:""}</div>
-        <div class="opts">${it.opts.map(optBtn).join("")}</div></li>`).join("")}</ul></section>`;
-  }
-  menu.innerHTML = html || `<div class="empty">${esc(L().none(raw))}</div>`;
-  tabs.querySelectorAll(".tab").forEach(b => b.hidden = !!nq && !menu.querySelector(`[data-cat="${b.dataset.slug}"]`));
-  observe();
-}
-function refreshOpt(id){
-  const op = OPT[id];
-  document.querySelectorAll(`[data-add="${id}"]`).forEach(b => b.outerHTML = optBtn(op));
+function findItem(slug){
+  for(const c of CATS){ for(const it of c.items){ if (it.slug===slug) return it; } }
+  return null;
 }
 
-/* ============ Nav ============ */
-let io, lock = 0;
-function go(slug){ const s = document.getElementById(slug); if (!s) return; setActive(slug); lock = Date.now();
-  const y = s.getBoundingClientRect().top + scrollY - $("#bar").offsetHeight - 8;
-  scrollTo({top:y, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"}); }
-function setActive(slug){ tabs.querySelectorAll(".tab").forEach(b => { const on = b.dataset.slug===slug; b.setAttribute("aria-current", on);
-  if (on){ const r = b.getBoundingClientRect(), pr = tabs.getBoundingClientRect();
-    if (r.left < pr.left || r.right > pr.right) tabs.scrollBy({left: r.left - pr.left - (pr.width - r.width)/2, behavior:"smooth"}); } }); }
-function observe(){ if (io) io.disconnect(); const secs = [...menu.querySelectorAll(".board")]; if (secs[0]) setActive(secs[0].dataset.cat);
-  if (!("IntersectionObserver" in window)) return;
-  io = new IntersectionObserver(es => { if (Date.now()-lock < 800) return;
-    const v = es.filter(e => e.isIntersecting).sort((a,b) => a.boundingClientRect.top - b.boundingClientRect.top);
-    if (v[0]) setActive(v[0].target.dataset.cat); }, {rootMargin:"-140px 0px -55% 0px"});
-  secs.forEach(s => io.observe(s)); }
-function fade(){ tabs.classList.toggle("more", tabs.scrollWidth - tabs.clientWidth - Math.abs(tabs.scrollLeft) > 4); }
-tabs.addEventListener("scroll", fade, {passive:true}); addEventListener("resize", fade);
-
-/* ============ Cart ============ */
-let toastT;
-function toast(msg){ const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("show"), 1400); }
-function setQty(id, n){ if (n > 0) cart[id] = Math.min(n, 99); else delete cart[id]; store.set("cart", cart); refreshOpt(id); drawCart(); }
-const count = () => Object.values(cart).reduce((a,b) => a+b, 0);
-const sum = () => Object.entries(cart).reduce((a,[id,n]) => a + (OPT[id] ? OPT[id].p*n : 0), 0);
-function lineName(op){ return nm(op.it) + (op.o ? ` (${ol(op.o)})` : ""); }
-function drawCart(){
-  const t = L(), n = count();
-  $("#cartbar").hidden = !n; $("#cb-n").textContent = n; $("#cb-l").textContent = t.bar; $("#cb-s").textContent = money(sum());
-  if ($("#cart-scrim").hidden) return;
-  $("#c-title").textContent = t.cart; $("#c-clear").textContent = t.clear;
-  $("#c-lines").innerHTML = n ? Object.entries(cart).map(([id,q]) => { const op = OPT[id]; return `<li class="line">
-      <div class="ln">${esc(lineName(op))}<small>${money(op.p)} × ${q} = ${money(op.p*q)}</small></div>
-      <span class="step"><button type="button" data-dec="${id}" aria-label="−">−</button><b>${q}</b><button type="button" data-inc="${id}" aria-label="+">+</button></span></li>`; }).join("")
-    : `<li class="empty">${t.empty}</li>`;
-  const types = ["table","pickup"].concat(S.delivery ? ["delivery"] : []);
-  if (!types.includes(orderType)) orderType = "table";
-  $("#c-type").innerHTML = types.map(k => `<button type="button" data-type="${k}" aria-pressed="${k===orderType}">${t.types[k]}</button>`).join("");
-  $("#f-table").hidden = orderType !== "table"; $("#f-name").hidden = orderType === "table"; $("#f-adr").hidden = orderType !== "delivery";
-  $("#l-table").textContent = t.table; $("#l-name").textContent = t.nameL; $("#l-addr").textContent = t.addr; $("#l-note").textContent = t.note;
-  $("#t-total").textContent = t.total; $("#c-sum").textContent = money(sum());
-  $("#c-send-t").textContent = t.send; $("#c-hint").textContent = t.hint;
-  $("#c-nowa").hidden = !!S.wa; $("#c-nowa").textContent = t.nowa; $("#c-send").disabled = !n || !S.wa;
-}
 document.addEventListener("click", e => {
-  const tab = e.target.closest(".tab"); if (tab) return go(tab.dataset.slug);
-  const add = e.target.closest("[data-add]");
-  if (add){ const id = add.dataset.add; setQty(id, (cart[id]||0)+1); toast(L().added(lineName(OPT[id]))); if (!$("#img-scrim").hidden) drawView(); return; }
-  const inc = e.target.closest("[data-inc]"), dec = e.target.closest("[data-dec]");
-  if (inc){ const id = inc.dataset.inc; return setQty(id, (cart[id]||0)+1); }
-  if (dec){ const id = dec.dataset.dec; return setQty(id, (cart[id]||0)-1); }
-  const ty = e.target.closest("[data-type]"); if (ty){ orderType = ty.dataset.type; store.set("type", orderType); return drawCart(); }
-  const v = e.target.closest("[data-view]"); if (v){ viewIt = OPT[v.dataset.view].it; drawView(); openSheet("#img-scrim"); }
+  const addBtn = e.target.closest("[data-add]");
+  if (addBtn){
+    const slug = addBtn.dataset.add, opt = addBtn.dataset.opt;
+    const it = findItem(slug); if(!it) return;
+    const op = it.opts.find(x => x.o === opt); if(!op) return;
+    const key = slug + ":" + opt;
+    if(!cart[key]) cart[key] = {slug, o:opt, n:nm(it), p:op.p, q:0};
+    cart[key].q++;
+    updateCartUI();
+    renderMenu($("#q").value);
+    toast(L().added(nm(it) + (opt?" ("+ol(opt)+")":"")));
+    return;
+  }
+  const thumb = e.target.closest("[data-img]");
+  if (thumb){
+    $("#v-img").src = thumb.dataset.img;
+    $("#v-name").textContent = thumb.dataset.name;
+    const opts = JSON.parse(thumb.dataset.opts||"[]");
+    $("#v-opts").innerHTML = opts.map(op => `<span class="opt" style="cursor:default">${op.o?`<span class="ol">${esc(ol(op.o))}</span>`:""}<span class="op">${money(op.p)}</span></span>`).join("");
+    $("#img-scrim").hidden = false; requestAnimationFrame(()=>$("#img-scrim").classList.add("show"));
+    return;
+  }
+  if (e.target.closest("[data-close]")){
+    document.querySelectorAll(".scrim").forEach(el => {
+      el.classList.remove("show"); setTimeout(()=>el.hidden=true, 200);
+    });
+    return;
+  }
+  if (e.target.closest("button[data-lang]")){
+    lang = e.target.closest("button[data-lang]").dataset.lang;
+    store.set("lang", lang); location.hash = lang; initUI();
+    return;
+  }
 });
-$("#c-clear").addEventListener("click", () => { const ids = Object.keys(cart); cart = {}; store.set("cart", cart); ids.forEach(refreshOpt); drawCart(); });
-$("#open-cart").addEventListener("click", () => { openSheet("#cart-scrim"); drawCart(); });
-["in-table","in-name","in-addr","in-note"].forEach(id => { const el = document.getElementById(id);
-  el.value = store.get("f:"+id, ""); el.addEventListener("input", () => { store.set("f:"+id, el.value); el.parentElement.classList.remove("bad"); }); });
+
+$("#open-cart").addEventListener("click", () => {
+  renderCartModal();
+  $("#cart-scrim").hidden = false; requestAnimationFrame(()=>$("#cart-scrim").classList.add("show"));
+});
+$("#c-clear").addEventListener("click", () => {
+  cart = {}; updateCartUI(); renderCartModal(); renderMenu($("#q").value);
+});
+
+function renderCartModal(){
+  const L_ = L();
+  $("#c-title").textContent = L_.cart;
+  $("#c-clear").textContent = L_.clear;
+  $("#l-table").textContent = L_.table;
+  $("#l-name").textContent = L_.nameL;
+  $("#l-addr").textContent = L_.addr;
+  $("#l-note").textContent = L_.note;
+  $("#c-send-t").textContent = L_.send;
+  $("#c-hint").textContent = L_.hint;
+
+  $("#f-table").hidden = orderType !== "table";
+  $("#f-adr").hidden = orderType !== "delivery";
+
+  $("#c-type").innerHTML = Object.keys(L_.types).map(k => `<button type="button" data-type="${k}" aria-pressed="${orderType===k}">${L_.types[k]}</button>`).join("");
+
+  let sum = 0, linesHtml = "";
+  for(const k in cart){
+    const item = cart[k]; sum += item.p * item.q;
+    linesHtml += `<li class="line">
+      <div class="ln"><b>${esc(item.n)}</b>${item.o?`<small>${esc(ol(item.o))}</small>`:""}<small>${money(item.p)}</small></div>
+      <div class="step">
+        <button type="button" data-dec="${k}">-</button>
+        <b>${item.q}</b>
+        <button type="button" data-inc="${k}">+</button>
+      </div>
+    </li>`;
+  }
+  $("#c-lines").innerHTML = linesHtml || `<li class="empty">${esc(L_.empty)}</li>`;
+  $("#t-total").textContent = L_.total;
+  $("#c-sum").textContent = money(sum);
+  $("#c-nowa").hidden = !!S.wa;
+  if(!S.wa){ $("#c-nowa").textContent = L_.nowa; $("#c-send").setAttribute("disabled", "disabled"); }
+  else { $("#c-send").removeAttribute("disabled"); }
+}
+
+document.addEventListener("click", e => {
+  const dt = e.target.closest("[data-type]");
+  if (dt){ orderType = dt.dataset.type; store.set("type", orderType); renderCartModal(); return; }
+  const inc = e.target.closest("[data-inc]");
+  if (inc){ const k = inc.dataset.inc; if(cart[k]) cart[k].q++; updateCartUI(); renderCartModal(); renderMenu($("#q").value); return; }
+  const dec = e.target.closest("[data-dec]");
+  if (dec){ const k = dec.dataset.dec; if(cart[k]){ cart[k].q--; if(cart[k].q<=0) delete cart[k]; } updateCartUI(); renderCartModal(); renderMenu($("#q").value); if(Object.keys(cart).length===0) $("#cart-scrim").classList.remove("show"); return; }
+});
+
 $("#c-send").addEventListener("click", () => {
-  const t = L(), need = {table:["in-table"], pickup:["in-name"], delivery:["in-name","in-addr"]}[orderType];
-  let ok = true; need.forEach(id => { const el = document.getElementById(id); if (!el.value.trim()){ el.parentElement.classList.add("bad"); ok = false; } });
-  if (!ok){ $("#c-hint").textContent = t.need; return; }
-  const v = id => document.getElementById(id).value.trim();
-  const lines = [`*${t.msgHead}*`, ""];
-  Object.entries(cart).forEach(([id,q]) => { const op = OPT[id];
-    const base = lang==="tr" && op.it.t ? `${op.it.t} (${op.it.n})` : op.it.n;
-    lines.push(`${q} × ${base}${op.o ? " - " + (lang==="tr" ? `${optTr(op.o)} (${op.o})` : op.o) : ""} = ${money(op.p*q)}`); });
-  lines.push("", `*${t.msgTotal}: ${money(sum())}*`, `${t.msgType}: ${t.types[orderType]}`);
-  if (orderType==="table") lines.push(`${t.msgTable}: ${v("in-table")}`); else lines.push(`${t.msgName}: ${v("in-name")}`);
-  if (orderType==="delivery") lines.push(`${t.msgAddr}: ${v("in-addr")}`);
-  if (v("in-note")) lines.push(`${t.msgNote}: ${v("in-note")}`);
-  const a = document.createElement("a");
-  a.href = `https://wa.me/${S.wa.replace(/\D/g,"")}?text=${encodeURIComponent(lines.join("\n"))}`; a.target = "_blank"; a.rel = "noopener";
-  document.body.appendChild(a); a.click(); a.remove();
+  const L_ = L();
+  const table = $("#in-table").value.trim();
+  const name = $("#in-name").value.trim();
+  const addr = $("#in-addr").value.trim();
+  const note = $("#in-note").value.trim();
+
+  if(orderType==="table" && !table){ $("#f-table").classList.add("bad"); toast(L_.need); return; } else $("#f-table").classList.remove("bad");
+  if(orderType==="delivery" && !addr){ $("#f-adr").classList.add("bad"); toast(L_.need); return; } else $("#f-adr").classList.remove("bad");
+
+  let text = `*${L_.msgHead}*\n\n🔹 *${L_.msgType}:* ${L_.types[orderType]}\n`;
+  if(orderType==="table" && table) text += `📌 *${L_.msgTable}:* ${table}\n`;
+  if(name) text += `👤 *${L_.msgName}:* ${name}\n`;
+  if(orderType==="delivery" && addr) text += `📍 *${L_.msgAddr}:* ${addr}\n`;
+  if(note) text += `📝 *${L_.msgNote}:* ${note}\n`;
+
+  text += `\n------------------\n`;
+  let sum = 0;
+  for(const k in cart){
+    const i = cart[k];
+    text += `▪️ ${i.q}x ${i.n} ${i.o? "("+ol(i.o)+")":""} - ${money(i.p * i.q)}\n`;
+    sum += i.p * i.q;
+  }
+  text += `------------------\n`;
+  text += `💰 *${L_.msgTotal}:* ${money(sum)}`;
+
+  window.open(`https://wa.me/${S.wa}?text=${encodeURIComponent(text)}`, "_blank");
 });
 
-/* ============ Sheets ============ */
-let viewIt = null, lastFocus = null;
-function drawView(){ if (!viewIt) return; $("#v-img").src = viewIt.img; $("#v-img").alt = nm(viewIt); $("#v-name").textContent = nm(viewIt);
-  $("#v-opts").innerHTML = viewIt.opts.map(optBtn).join(""); }
-function openSheet(sel){ const s = $(sel); lastFocus = document.activeElement; s.hidden = false; requestAnimationFrame(() => s.classList.add("show"));
-  const x = s.querySelector("[data-close]"); if (x) x.focus(); }
-function closeSheet(s){ s.classList.remove("show"); setTimeout(() => { s.hidden = true; }, 200); if (lastFocus && lastFocus.isConnected) lastFocus.focus({preventScroll:true}); }
-document.querySelectorAll(".scrim").forEach(s => s.addEventListener("click", e => { if (e.target === s || e.target.closest("[data-close]")) closeSheet(s); }));
-document.addEventListener("keydown", e => { if (e.key === "Escape") document.querySelectorAll(".scrim:not([hidden])").forEach(closeSheet); });
+$("#q").addEventListener("input", e => {
+  const v = e.target.value;
+  $("#clear").hidden = !v;
+  renderMenu(v);
+});
+$("#clear").addEventListener("click", () => {
+  $("#q").value = ""; $("#clear").hidden = true; renderMenu("");
+});
 
-/* ============ Search / language ============ */
-const qi = $("#q"), clr = $("#clear");
-qi.addEventListener("input", () => { clr.hidden = !qi.value; render(qi.value); });
-clr.addEventListener("click", () => { qi.value = ""; clr.hidden = true; render(""); qi.focus(); });
-document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => { lang = b.dataset.lang; store.set("lang", lang); applyLang(); }));
+document.addEventListener("scroll", () => {
+  let cur = "";
+  document.querySelectorAll("section.board").forEach(sec => {
+    if (window.scrollY >= sec.offsetTop - 120) cur = sec.id;
+  });
+  document.querySelectorAll(".tab").forEach(tab => {
+    if (tab.dataset.to === cur) tab.setAttribute("aria-current", "true");
+    else tab.removeAttribute("aria-current");
+  });
+});
 
-/* ============ Hours ============ */
-function hm(s){ const m = String(s||"").match(/(\d{1,2})[:.](\d{2})/); return m ? (+m[1])*60 + (+m[2]) : null; }
-function status(){
-  const el = $("#status"), t = L(), o = hm(S.open), c = hm(S.close);
-  el.classList.remove("is-open","is-closed"); el.hidden = o == null || c == null; if (el.hidden) return;
-  let now; try { const p = new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/Istanbul",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(new Date());
-    now = (+p.find(x=>x.type==="hour").value)*60 + (+p.find(x=>x.type==="minute").value); } catch(e){ el.hidden = true; return; }
-  const open = o < c ? (now >= o && now < c) : (now >= o || now < c);
-  el.classList.add(open ? "is-open" : "is-closed"); $("#status-t").textContent = open ? t.open(S.close) : t.closed(S.open);
+$("#tabs").addEventListener("click", e => {
+  const t = e.target.closest("[data-to]");
+  if(t){
+    const el = document.getElementById(t.dataset.to);
+    if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+});
+
+function initUI(){
+  const L_ = L();
+  document.documentElement.lang = lang;
+  document.documentElement.dir = L_.dir;
+  $("#t-hi").textContent = L_.hi;
+  $("#t-tag").textContent = L_.tag;
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
+
+  const isOpen = true; 
+  const statusEl = $("#status");
+  statusEl.hidden = false;
+  statusEl.className = "pill " + (isOpen ? "is-open" : "is-closed");
+  $("#status-t").textContent = isOpen ? L_.open(S.close) : L_.closed(S.open);
+
+  if(S.address){ $("#addr-pill").hidden = false; $("#addr-pill").href = S.map; $("#addr-t").textContent = S.address; }
+
+  $("#q").placeholder = L_.search;
+
+  // جلب البيانات مباشرة من جوجل شيت مع متغير الوقت لمنع الكاش
+  const freshUrl = `${SHEET_CSV}&t=${Date.now()}`;
+  fetch(freshUrl)
+    .then(res => res.text())
+    .then(text => {
+      const rows = parseCSV(text);
+      build(rows);
+      renderTabs();
+      renderMenu($("#q").value);
+      updateCartUI();
+    })
+    .catch(err => {
+      console.error("فشل جلب بيانات الشيت:", err);
+      $("#menu").innerHTML = `<div class="empty">عذراً، حدث خطأ في تحميل المنيو من جوجل شيت.</div>`;
+    });
+
+  if(S.hours || S.open){
+    $("#f-hours").hidden = false;
+    $("#t-hours-h").textContent = L_.hoursH;
+    $("#t-hours").textContent = L_.hours(S.open, S.close);
+  }
+  if(S.address){
+    $("#f-addr").hidden = false;
+    $("#t-addr-h").textContent = L_.addrH;
+    $("#f-addr-t").textContent = S.address;
+    if(S.map){ $("#f-map").hidden = false; $("#f-map").href = S.map; $("#f-map").textContent = L_.map; }
+  }
+  if(S.phone){
+    $("#f-contact").hidden = false;
+    $("#t-contact-h").textContent = L_.contactH;
+    $("#f-contact-t").textContent = `${L_.phone}: ${S.phone} | ${L_.wa}: ${S.wa}`;
+  }
+  if(S.instagram || S.facebook){
+    $("#f-social").hidden = false;
+    $("#t-follow").textContent = L_.follow;
+    let sHtml = "";
+    if(S.instagram) sHtml += `<a class="pill" href="${S.instagram}" target="_blank" rel="noopener">Instagram</a>`;
+    if(S.facebook) sHtml += `<a class="pill" href="${S.facebook}" target="_blank" rel="noopener">Facebook</a>`;
+    $("#f-social-l").innerHTML = sHtml;
+  }
+  $("#t-prices").textContent = L_.prices;
 }
 
-/* ============ Google Sheets ============ */
-function parseCSV(text){ const rows = []; let row = [], f = "", q = false;
-  for (let i = 0; i < text.length; i++){ const ch = text[i];
-    if (q){ if (ch === '"'){ if (text[i+1] === '"'){ f += '"'; i++; } else q = false; } else f += ch; }
-    else if (ch === '"') q = true; else if (ch === ","){ row.push(f); f = ""; }
-    else if (ch === "\n"){ row.push(f); rows.push(row); row = []; f = ""; } else if (ch !== "\r") f += ch; }
-  if (f || row.length){ row.push(f); rows.push(row); } return rows; }
-function fromSheet(rows){
-  const head = rows.shift().map(h => h.trim()), col = n => head.indexOf(n), cell = (r,i) => i >= 0 ? String(r[i]||"").trim() : "";
-  const I = {c:col("القسم"), n:col("الصنف"), o:col("الخيار"), p:col("السعر"), a:col("متوفر"), ct:col("القسم بالتركي"), nt:col("الصنف بالتركي"), im:col("الصورة"), k:col("الإعداد"), v:col("القيمة")};
-  if (I.c < 0 || I.n < 0 || I.p < 0 || I.o < 0) throw new Error("columns");
-  const set = {}; if (I.k >= 0 && I.v >= 0) rows.forEach(r => { const k = cell(r,I.k); if (k) set[k] = cell(r,I.v); });
-  const out = [];
-  rows.forEach(r => { const c = cell(r,I.c), n = cell(r,I.n), p = parseFloat(cell(r,I.p).replace(/[^\d.]/g,""));
-    if (!c || !n || isNaN(p)) return; if (/^(لا|no|hayır|0)$/i.test(cell(r,I.a))) return;
-    out.push([c, cell(r,I.ct), n, cell(r,I.nt), cell(r,I.o), p, cell(r,I.im)]); });
-  if (!out.length) throw new Error("empty");
-  return {rows:out, set};
-}
-function applySettings(s){
-  const yes = v => /^(نعم|yes|evet|1)$/i.test(v||"");
-  const map = {"واتساب":"wa","هاتف":"phone","يفتح":"open","يسكّر":"close","يسكر":"close","العنوان":"address","رابط الخريطة":"map","إنستغرام":"instagram","فيسبوك":"facebook"};
-  for (const k in s){ if (map[k]) S[map[k]] = s[k]; }
-  if (s["التوصيل"] !== undefined) S.delivery = yes(s["التوصيل"]);
-}
-
-/* ============ Start ============ */
-CATS = build(ROWS); applyLang();
-if (SHEET_CSV){
-  fetch(SHEET_CSV + (SHEET_CSV.includes("?") ? "&" : "?") + "t=" + Date.now(), {cache:"no-store"})
-    .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
-    .then(txt => { const d = fromSheet(parseCSV(txt)); applySettings(d.set); CATS = build(d.rows); applyLang(); })
-    .catch(() => {});
-}
+initUI();
 </script>
 </body>
 </html>
