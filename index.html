@@ -65,8 +65,6 @@ button{cursor:pointer}
 .logo{position:absolute;inset:15%;width:70%;height:70%;border-radius:50%;object-fit:cover;box-shadow:0 0 0 6px var(--white),0 18px 44px rgba(20,22,21,.28)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 h1{margin:0;font-weight:400}
-.w-roast{display:block;font-family:var(--script);color:var(--green);font-size:clamp(46px,12vw,72px);line-height:1.05;transform:rotate(-4deg)}
-.w-chicken{display:block;font-family:var(--display);font-weight:800;color:var(--white);font-size:clamp(24px,6vw,34px);letter-spacing:1px;margin-top:-4px}
 .tag{margin:16px auto 0;padding-inline:16px;font-size:15px;font-weight:600;text-align:center;color:var(--text);max-width:40ch;text-wrap:balance}
 .meta{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:14px}
 .pill{display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:999px;background:var(--white);border:1px solid var(--line);color:var(--text);font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap}
@@ -74,7 +72,6 @@ h1{margin:0;font-weight:400}
 .pdot{width:8px;height:8px;border-radius:50%;background:var(--muted)}
 .is-open .pdot{background:var(--green);box-shadow:0 0 0 3px rgba(122,194,58,.25)}
 .is-closed .pdot{background:var(--red)}
-
 
 /* ---------- Sticky nav ---------- */
 .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);margin-top:0;box-shadow:0 6px 16px rgba(20,22,21,.04)}
@@ -275,14 +272,13 @@ footer p{margin:0}
 <script src="config.js"></script>
 <script>
 /* ============ Config ============ */
-const SHEET_CSV = (window.MENU_CONFIG && window.MENU_CONFIG.sheet || "").trim() || "";
-const ROWS = [["فروج", "Tavuk", "فروج بروستد", "Broasted Tavuk", "كامل", 600, ""], ["فروج", "Tavuk", "فروج بروستد", "Broasted Tavuk", "نصف", 300, ""], ["فروج", "Tavuk", "فروج مشوي", "Piliç Çevirme", "كامل", 400, ""], ["فروج", "Tavuk", "فروج مشوي", "Piliç Çevirme", "نصف", 225, ""], ["فروج", "Tavuk", "نصف فروج مشوي مع رز مندي", "Mandi Pilavlı Yarım Piliç Çevirme", "", 300, ""], ["سندويش شاورما", "Döner Dürüm", "سندويش شاورما", "Tavuk Döner Dürüm", "عادي", 120, ""], ["سندويش شاورما", "Döner Dürüm", "سندويش شاورما", "Tavuk Döner Dürüm", "دبل", 140, ""], ["سندويش شاورما", "Döner Dürüm", "سندويش شاورما إكسترا فطر وجبنة", "Mantarlı Kaşarlı Döner Dürüm", "", 170, ""], ["سندويش شاورما", "Döner Dürüm", "أصابع شاورما شامية", "Şam Usulü Parmak Döner", "", 80, ""], ["وجبات شاورما", "Döner Menüler", "شاورما عربي", "Arap Döner", "عادي", 225, ""], ["وجبات شاورما", "Döner Menüler", "شاورما عربي", "Arap Döner", "دبل", 350, ""], ["وجبات شاورما", "Döner Menüler", "شاورما عربي إكسترا فطر وجبنة", "Mantarlı Kaşarlı Arap Döner", "عادي", 275, ""], ["وجبات شاورما", "Döner Menüler", "شاورما عربي إكسترا فطر وجبنة", "Mantarlı Kaşarlı Arap Döner", "دبل", 450, ""], ["وجبات شاورما", "Döner Menüler", "شاورما إيطالي", "İtalyan Döner", "عادي", 300, ""], ["وجبات شاورما", "Döner Menüler", "شاورما إيطالي", "İtalyan Döner", "دبل", 500, ""], ["وجبات شاورما", "Döner Menüler", "شاورما بانيه", "Pane Döner", "عادي", 250, ""], ["وجبات شاورما", "Döner Menüler", "شاورما بانيه", "Pane Döner", "دبل", 400, ""], ["وجبات شاورما", "Döner Menüler", "وجبة شاورما ورز", "Pilavlı Döner Menü", "", 250, ""], ["وجبات شاورما", "Döner Menüler", "وجبة فرط 200 غرام", "Porsiyon Döner Menü (200 g)", "", 225, ""], ["شاورما فرط", "Kilo Döner", "شاورما فرط", "Döner", "1 كيلو", 750, ""], ["شاورما فرط", "Kilo Döner", "شاورما فرط", "Döner", "نصف كيلو", 375, ""], ["سندويش غربي", "Batı Dürümler", "سندويش سبايسي", "Spicy Dürüm", "عادي", 150, ""], ["سندويش غربي", "Batı Dürümler", "سندويش سبايسي", "Spicy Dürüm", "دبل", 170, ""], ["سندويش غربي", "Batı Dürümler", "سندويش كريسبي", "Crispy Dürüm", "عادي", 150, ""], ["سندويش غربي", "Batı Dürümler", "سندويش كريسبي", "Crispy Dürüm", "دبل", 170, ""], ["سندويش غربي", "Batı Dürümler", "سندويش نكيت", "Nugget Dürüm", "عادي", 150, ""], ["سندويش غربي", "Batı Dürümler", "سندويش نكيت", "Nugget Dürüm", "دبل", 170, ""], ["سندويش غربي", "Batı Dürümler", "سندويش مكسيكانو", "Mexicano Dürüm", "عادي", 170, ""], ["سندويش غربي", "Batı Dürümler", "سندويش مكسيكانو", "Mexicano Dürüm", "دبل", 200, ""], ["سندويش غربي", "Batı Dürümler", "سندويش بطاطا", "Patates Dürüm", "عادي", 80, ""], ["سندويش غربي", "Batı Dürümler", "سندويش بطاطا", "Patates Dürüm", "دبل", 100, ""], ["سندويش غربي", "Batı Dürümler", "سندويش سكالوب", "Escalope Dürüm", "", 180, ""], ["سندويش غربي", "Batı Dürümler", "سندويش شيش طاووق", "Şiş Tavuk Dürüm", "", 150, ""], ["سندويش غربي", "Batı Dürümler", "سندويش فاهيتا", "Fajita Dürüm", "", 200, ""], ["وجبات غربي", "Batı Menüleri", "وجبة سبايسي", "Spicy Menü", "عادي", 250, ""], ["وجبات غربي", "Batı Menüleri", "وجبة سبايسي", "Spicy Menü", "دبل", 400, ""], ["وجبات غربي", "Batı Menüleri", "وجبة كريسبي", "Crispy Menü", "عادي", 250, ""], ["وجبات غربي", "Batı Menüleri", "وجبة كريسبي", "Crispy Menü", "دبل", 400, ""], ["وجبات غربي", "Batı Menüleri", "وجبة نكيت", "Nugget Menü", "عادي", 250, ""], ["وجبات غربي", "Batı Menüleri", "وجبة نكيت", "Nugget Menü", "دبل", 400, ""], ["وجبات غربي", "Batı Menüleri", "وجبة سكالوب", "Escalope Menü", "عادي", 300, ""], ["وجبات غربي", "Batı Menüleri", "وجبة سكالوب", "Escalope Menü", "دبل", 500, ""], ["وجبات غربي", "Batı Menüleri", "وجبة مكسيكانو", "Mexicano Menü", "", 250, ""], ["وجبات غربي", "Batı Menüleri", "وجبة شيش طاووق", "Şiş Tavuk Menü", "", 250, ""], ["وجبات غربي", "Batı Menüleri", "وجبة فاهيتا جبنة", "Kaşarlı Fajita Menü", "", 300, ""], ["وجبات برغر", "Burger Menüler", "همبرغر لحم", "Et Burger", "عادي", 200, ""], ["وجبات برغر", "Burger Menüler", "همبرغر لحم", "Et Burger", "دبل", 300, ""], ["وجبات برغر", "Burger Menüler", "همبرغر لحم غنم", "Kuzu Burger", "عادي", 250, ""], ["وجبات برغر", "Burger Menüler", "همبرغر لحم غنم", "Kuzu Burger", "دبل", 400, ""], ["وجبات برغر", "Burger Menüler", "همبرغر كريسبي", "Crispy Burger", "عادي", 200, ""], ["وجبات برغر", "Burger Menüler", "همبرغر كريسبي", "Crispy Burger", "دبل", 300, ""], ["وجبات برغر", "Burger Menüler", "همبرغر سكالوب", "Escalope Burger", "عادي", 200, ""], ["وجبات برغر", "Burger Menüler", "همبرغر سكالوب", "Escalope Burger", "دبل", 300, ""], ["مقبلات", "Mezeler", "صحن بطاطا", "Patates Kızartması", "كبير", 160, ""], ["مقبلات", "Mezeler", "صحن بطاطا", "Patates Kızartması", "وسط", 120, ""], ["مقبلات", "Mezeler", "صحن بطاطا", "Patates Kızartması", "عادي", 60, ""], ["مقبلات", "Mezeler", "صحن رز", "Pilav", "كبير", 100, ""], ["مقبلات", "Mezeler", "صحن رز", "Pilav", "صغير", 40, ""], ["مقبلات", "Mezeler", "حمص", "Humus", "", 50, ""], ["مقبلات", "Mezeler", "متبل", "Mutebel", "", 50, ""], ["مقبلات", "Mezeler", "كريم توم", "Sarımsak Sosu", "1 كيلو", 160, ""], ["مقبلات", "Mezeler", "صوص حار", "Acı Sos", "1 كيلو", 160, ""], ["مشروبات", "İçecekler", "بيبسي", "Pepsi", "330 مل", 50, ""], ["مشروبات", "İçecekler", "بيبسي", "Pepsi", "1 لتر", 70, ""], ["مشروبات", "İçecekler", "بيبسي", "Pepsi", "2.5 لتر", 100, ""], ["مشروبات", "İçecekler", "فانتا", "Fanta", "330 مل", 50, ""], ["مشروبات", "İçecekler", "فانتا", "Fanta", "1 لتر", 70, ""], ["مشروبات", "İçecekler", "فانتا", "Fanta", "2.5 لتر", 100, ""], ["مشروبات", "İçecekler", "عيران كبير", "Büyük Ayran", "", 25, ""]];   // [القسم, القسم بالتركي, الصنف, الصنف بالتركي, الخيار, السعر, الصورة]
+const SHEET_CSV = (window.MENU_CONFIG && window.MENU_CONFIG.sheet || "").trim();
+const ROWS = [];   // المنيو كله يجي من قوقل شيت فقط
 const CUR = "₺";
 const DEFAULTS = {wa:"905547899664", phone:"905513658867", open:"10ص", close:"9م", delivery:true, address:"Hal, 141. Cadde 79-75, 33020 Akdeniz/Mersin", map:"https://maps.app.goo.gl/qN9FQ45bSxXHHxtS8", instagram:"https://www.instagram.com/roastchicken.33?mdxt=MXhjdjU0Ym1rcWduaw==", facebook:"https://www.facebook.com/share/1Cas9ZZu4K/"};
 
 const T = {
   ar:{dir:"rtl", hi:"صحتين وعافية", tag:"فروج مشوي - بروستد - شاورما - برغر - وجبات غربية",
-
       search:"ابحث… شاورما، بروستد، برغر", n:k=>`${k} صنف`, none:q=>`ما في نتائج لـ «${q}». جرّب كلمة ثانية.`,
       open:c=>`مفتوح الآن · يسكّر ${c}`, closed:o=>`مسكّر حالياً · يفتح ${o}`, added:n=>`انضاف: ${n}`,
       bar:"عرض الطلب", cart:"طلبك", clear:"إفراغ", types:{table:"بالصالة",pickup:"استلام",delivery:"توصيل"},
@@ -293,7 +289,6 @@ const T = {
       contactH:"تواصل معنا", phone:"هاتف", wa:"واتساب", follow:"تابعونا", prices:"الأسعار بالليرة التركية وقد تتغير دون إشعار مسبق.",
       msgHead:"طلب جديد - Roast chicken", msgType:"نوع الطلب", msgTable:"طاولة", msgName:"الاسم", msgAddr:"العنوان", msgNote:"ملاحظات", msgTotal:"المجموع"},
   tr:{dir:"ltr", hi:"Afiyet olsun", tag:"Piliç Çevirme - Broasted - Döner - Burger - Batı Menüleri",
-
       search:"Ara… döner, broasted, burger", n:k=>`${k} ürün`, none:q=>`“${q}” için sonuç yok.`,
       open:c=>`Şu an açık · ${c}'de kapanır`, closed:o=>`Şu an kapalı · ${o}'da açılır`, added:n=>`Eklendi: ${n}`,
       bar:"Siparişi gör", cart:"Siparişiniz", clear:"Temizle", types:{table:"Masada",pickup:"Gel al",delivery:"Paket servis"},
@@ -375,7 +370,6 @@ function applyLang(){
   d.style.setProperty("--fade", t.dir==="rtl" ? "left" : "right");
   document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang===lang));
   $("#t-hi").textContent = t.hi; $("#t-tag").textContent = t.tag; $("#q").placeholder = t.search;
-  // info from settings
   $("#t-hours-h").textContent = t.hoursH; $("#t-addr-h").textContent = t.addrH; $("#t-contact-h").textContent = t.contactH;
   $("#t-follow").textContent = t.follow; $("#t-prices").textContent = t.prices;
   $("#f-hours").hidden = !(S.open && S.close); $("#t-hours").textContent = t.hours(S.open, S.close);
@@ -419,12 +413,12 @@ function render(q){
         <div class="nm"><b>${hl(nm(it), raw)}</b>${alt(it)?`<small>${esc(alt(it))}</small>`:""}</div>
         <div class="opts">${it.opts.map(optBtn).join("")}</div></li>`).join("")}</ul></section>`;
   }
-  menu.innerHTML = html || `<div class="empty">${esc(L().none(raw))}</div>`;
+  menu.innerHTML = html || (CATS.length ? `<div class="empty">${esc(L().none(raw))}</div>` : "");
   tabs.querySelectorAll(".tab").forEach(b => b.hidden = !!nq && !menu.querySelector(`[data-cat="${b.dataset.slug}"]`));
   observe();
 }
 function refreshOpt(id){
-  const op = OPT[id];
+  const op = OPT[id]; if (!op) return;
   document.querySelectorAll(`[data-add="${id}"]`).forEach(b => b.outerHTML = optBtn(op));
 }
 
@@ -490,7 +484,7 @@ $("#c-send").addEventListener("click", () => {
   if (!ok){ $("#c-hint").textContent = t.need; return; }
   const v = id => document.getElementById(id).value.trim();
   const lines = [`*${t.msgHead}*`, ""];
-  Object.entries(cart).forEach(([id,q]) => { const op = OPT[id];
+  Object.entries(cart).forEach(([id,q]) => { const op = OPT[id]; if (!op) return;
     const base = lang==="tr" && op.it.t ? `${op.it.t} (${op.it.n})` : op.it.n;
     lines.push(`${q} × ${base}${op.o ? " - " + (lang==="tr" ? `${optTr(op.o)} (${op.o})` : op.o) : ""} = ${money(op.p*q)}`); });
   lines.push("", `*${t.msgTotal}: ${money(sum())}*`, `${t.msgType}: ${t.types[orderType]}`);
@@ -536,33 +530,59 @@ function parseCSV(text){ const rows = []; let row = [], f = "", q = false;
     else if (ch === '"') q = true; else if (ch === ","){ row.push(f); f = ""; }
     else if (ch === "\n"){ row.push(f); rows.push(row); row = []; f = ""; } else if (ch !== "\r") f += ch; }
   if (f || row.length){ row.push(f); rows.push(row); } return rows; }
+const clean = s => String(s||"").replace(/[\u200E\u200F\uFEFF]/g,"").trim();
 function fromSheet(rows){
-  const head = rows.shift().map(h => h.trim()), col = n => head.indexOf(n), cell = (r,i) => i >= 0 ? String(r[i]||"").trim() : "";
+  while (rows.length && !rows[0].some(h => clean(h) === "الصنف")) rows.shift();
+  if (!rows.length) throw new Error("لم أجد صف العناوين (عمود «الصنف»)");
+  const head = rows.shift().map(clean), col = n => head.indexOf(n), cell = (r,i) => i >= 0 ? clean(r[i]) : "";
   const I = {c:col("القسم"), n:col("الصنف"), o:col("الخيار"), p:col("السعر"), a:col("متوفر"), ct:col("القسم بالتركي"), nt:col("الصنف بالتركي"), im:col("الصورة"), k:col("الإعداد"), v:col("القيمة")};
-  if (I.c < 0 || I.n < 0 || I.p < 0 || I.o < 0) throw new Error("columns");
+  if (I.c < 0 || I.n < 0 || I.p < 0) throw new Error("أعمدة ناقصة: لازم القسم والصنف والسعر");
   const set = {}; if (I.k >= 0 && I.v >= 0) rows.forEach(r => { const k = cell(r,I.k); if (k) set[k] = cell(r,I.v); });
   const out = [];
   rows.forEach(r => { const c = cell(r,I.c), n = cell(r,I.n), p = parseFloat(cell(r,I.p).replace(/[^\d.]/g,""));
     if (!c || !n || isNaN(p)) return; if (/^(لا|no|hayır|0)$/i.test(cell(r,I.a))) return;
     out.push([c, cell(r,I.ct), n, cell(r,I.nt), cell(r,I.o), p, cell(r,I.im)]); });
-  if (!out.length) throw new Error("empty");
+  if (!out.length) throw new Error("الشيت فاضي من الأصناف");
   return {rows:out, set};
 }
 function applySettings(s){
   const yes = v => /^(نعم|yes|evet|1)$/i.test(v||"");
   const map = {"واتساب":"wa","هاتف":"phone","يفتح":"open","يسكّر":"close","يسكر":"close","العنوان":"address","رابط الخريطة":"map","إنستغرام":"instagram","فيسبوك":"facebook"};
-  for (const k in s){ if (map[k]) S[map[k]] = s[k]; }
-  if (s["التوصيل"] !== undefined) S.delivery = yes(s["التوصيل"]);
+  for (const k in s){ if (map[k] && s[k]) S[map[k]] = s[k]; }
+  if (s["التوصيل"]) S.delivery = yes(s["التوصيل"]);
 }
 
 /* ============ Start ============ */
-CATS = build(ROWS); applyLang();
-if (SHEET_CSV){
-  fetch(SHEET_CSV + (SHEET_CSV.includes("?") ? "&" : "?") + "t=" + Date.now(), {cache:"no-store"})
-    .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
-    .then(txt => { const d = fromSheet(parseCSV(txt)); applySettings(d.set); CATS = build(d.rows); applyLang(); })
-    .catch(() => {});
+function showErr(msg){
+  let b = document.getElementById("sheet-err");
+  if (!b){ b = document.createElement("div"); b.id = "sheet-err";
+    b.style.cssText = "background:#fde6e4;color:#a52018;padding:8px 12px;font-size:13px;text-align:center";
+    document.body.prepend(b); }
+  b.textContent = msg;
 }
+function hideErr(){ const b = document.getElementById("sheet-err"); if (b) b.remove(); }
+function useData(d){ applySettings(d.set); CATS = build(d.rows); applyLang(); }
+
+async function loadSheet(){
+  if (!SHEET_CSV) throw new Error("config.js: رابط الشيت فاضي");
+  const r = await fetch(SHEET_CSV + (SHEET_CSV.includes("?") ? "&" : "?") + "t=" + Date.now(), {cache:"no-store"});
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  const txt = await r.text();
+  if (/^\s*<(!doctype|html)/i.test(txt)) throw new Error("الشيت مو منشور بصيغة CSV");
+  const d = fromSheet(parseCSV(txt));
+  store.set("sheet", d);
+  return d;
+}
+async function refresh(){
+  try{ useData(await loadSheet()); hideErr(); }
+  catch(e){ console.warn(e); showErr("تعذّر تحديث المنيو: " + e.message); }
+}
+
+// أول فتح: آخر نسخة ناجحة محفوظة بالجوال، وبعدها نجيب الجديد
+const cached = store.get("sheet", null);
+if (cached && cached.rows && cached.rows.length) useData(cached); else { CATS = build(ROWS); applyLang(); }
+refresh();
+document.addEventListener("visibilitychange", () => { if (!document.hidden) refresh(); });
 </script>
 </body>
 </html>
