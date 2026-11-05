@@ -583,54 +583,6 @@ const cached = store.get("sheet", null);
 if (cached && cached.rows && cached.rows.length) useData(cached); else { CATS = build(ROWS); applyLang(); }
 refresh();
 document.addEventListener("visibilitychange", () => { if (!document.hidden) refresh(); });
- /* ===== حط موقعك (بجانب عنوان التوصيل) ===== */
-(function(){
-  const TXT = {
-    ar:{btn:"📍 حط موقعك", ok:"✓ تم تحديد موقعك", wait:"جاري التحديد…", fail:"ما قدرنا نحدد موقعك. فعّل الموقع من إعدادات الجوال أو اكتب العنوان.", map:"الموقع على الخريطة"},
-    tr:{btn:"📍 Konumunu ekle", ok:"✓ Konum alındı", wait:"Alınıyor…", fail:"Konum alınamadı. Konumu açın veya adresi yazın.", map:"Harita konumu"}
-  };
-  let loc = null;
-  const box = document.getElementById("f-adr");
-  const label = box.querySelector("label");
-
-  // صف يجمع الكلمة والزر بجانب بعض
-  const row = document.createElement("div");
-  row.style.cssText = "display:flex;align-items:center;justify-content:space-between;gap:10px";
-  box.insertBefore(row, label);
-  row.appendChild(label);
-
-  const btn = document.createElement("button");
-  btn.type = "button";
-  btn.style.cssText = "background:var(--green-soft);border:1.5px solid var(--green);color:var(--green-text);border-radius:999px;padding:5px 12px;font-weight:700;font-size:13px;white-space:nowrap";
-  row.appendChild(btn);
-
-  function upd(){ btn.textContent = loc ? TXT[lang].ok : TXT[lang].btn; }
-  upd();
-
-  btn.addEventListener("click", () => {
-    const hint = document.getElementById("c-hint");
-    if (!navigator.geolocation){ hint.textContent = TXT[lang].fail; return; }
-    btn.textContent = TXT[lang].wait; btn.disabled = true;
-    navigator.geolocation.getCurrentPosition(
-      p => { loc = {lat:p.coords.latitude.toFixed(6), lng:p.coords.longitude.toFixed(6)}; btn.disabled = false; upd(); },
-      () => { loc = null; btn.disabled = false; upd(); hint.textContent = TXT[lang].fail; },
-      {enableHighAccuracy:true, timeout:12000, maximumAge:0}
-    );
-  });
-
-  // عند الإرسال: نضيف رابط الموقع للرسالة
-  document.addEventListener("click", e => {
-    if (!e.target.closest("#c-send") || orderType !== "delivery" || !loc) return;
-    const addr = document.getElementById("in-addr"), note = document.getElementById("in-note");
-    const oa = addr.value, on = note.value;
-    if (!addr.value.trim()) addr.value = "📍";
-    note.value = (on ? on + "\n" : "") + TXT[lang].map + ": https://www.google.com/maps?q=" + loc.lat + "," + loc.lng;
-    setTimeout(() => { addr.value = oa; note.value = on; }, 0);
-  }, true);
-
-  document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", upd));
-  document.getElementById("open-cart").addEventListener("click", upd);
-})(); 
 </script>
 </body>
 </html>
