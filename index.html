@@ -259,7 +259,8 @@ footer p{margin:0}
       <div class="seg" id="c-type" role="group"></div>
       <div class="field" id="f-table"><label for="in-table" id="l-table"></label><input id="in-table" inputmode="numeric"></div>
       <div class="field" id="f-name"><label for="in-name" id="l-name"></label><input id="in-name" autocomplete="name"></div>
-      <div class="field" id="f-adr"><label for="in-addr" id="l-addr"></label><textarea id="in-addr" rows="2" autocomplete="street-address"></textarea></div>
+      <div class="field" id="f-adr"><label for="in-addr" id="l-addr"></label><textarea id="in-addr" rows="2" autocomplete="street-address"></textarea>
+<button type="button" class="btn" id="get-loc" style="background:#fff;border:1.5px solid var(--green);color:var(--green-text);padding:10px"></button></div>
       <div class="field"><label for="in-note" id="l-note"></label><textarea id="in-note" rows="2"></textarea></div>
       <div class="total"><span id="t-total"></span><span id="c-sum"></span></div>
       <div class="warn" id="c-nowa" hidden></div>
@@ -299,6 +300,8 @@ const T = {
       contactH:"İletişim", phone:"Telefon", wa:"WhatsApp", follow:"Bizi takip edin", prices:"Fiyatlar Türk Lirası cinsindendir ve önceden haber verilmeksizin değişebilir.",
       msgHead:"Yeni sipariş - Roast chicken", msgType:"Sipariş türü", msgTable:"Masa", msgName:"İsim", msgAddr:"Adres", msgNote:"Not", msgTotal:"Toplam"}
 };
+T.ar.loc="📍 أرسل موقعي الحالي"; T.ar.locOk="✓ تم تحديد موقعك (اضغط لتحديثه)"; T.ar.locWait="جاري تحديد الموقع…"; T.ar.locFail="ما قدرنا نحدد موقعك. فعّل الموقع أو اكتب العنوان يدوياً."; T.ar.msgLoc="الموقع على الخريطة";
+T.tr.loc="📍 Konumumu gönder"; T.tr.locOk="✓ Konum alındı (güncellemek için dokunun)"; T.tr.locWait="Konum alınıyor…"; T.tr.locFail="Konum alınamadı. Konumu açın veya adresi yazın."; T.tr.msgLoc="Harita konumu";  
 const OPT_TR = {"عادي":"Normal","دبل":"Duble","كامل":"Bütün","نصف":"Yarım","كبير":"Büyük","وسط":"Orta","صغير":"Küçük","نصف كيلو":"500 g"};
 const optTr = o => OPT_TR[o] || o.replace(/مل/g,"ml").replace(/لتر|ليتر/g,"L").replace(/كيلو/g,"kg").replace(/غرام|غ/g,"g");
 
@@ -326,6 +329,7 @@ let lang = (location.hash==="#tr"||location.hash==="#ar") ? location.hash.slice(
          : store.get("lang", (navigator.language||"").toLowerCase().startsWith("tr") ? "tr" : "ar");
 let cart = store.get("cart", {}), orderType = store.get("type","table");
 let CATS = [], OPT = {};
+let myLoc = null;  
 const L = () => T[lang];
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const money = p => `${Number(p).toLocaleString("en-US")} ${CUR}`;
@@ -462,6 +466,7 @@ function drawCart(){
   $("#l-table").textContent = t.table; $("#l-name").textContent = t.nameL; $("#l-addr").textContent = t.addr; $("#l-note").textContent = t.note;
   $("#t-total").textContent = t.total; $("#c-sum").textContent = money(sum());
   $("#c-send-t").textContent = t.send; $("#c-hint").textContent = t.hint;
+  $("#get-loc").textContent = myLoc ? t.locOk : t.loc;
   $("#c-nowa").hidden = !!S.wa; $("#c-nowa").textContent = t.nowa; $("#c-send").disabled = !n || !S.wa;
 }
 document.addEventListener("click", e => {
@@ -479,7 +484,7 @@ $("#open-cart").addEventListener("click", () => { openSheet("#cart-scrim"); draw
 ["in-table","in-name","in-addr","in-note"].forEach(id => { const el = document.getElementById(id);
   el.value = store.get("f:"+id, ""); el.addEventListener("input", () => { store.set("f:"+id, el.value); el.parentElement.classList.remove("bad"); }); });
 $("#c-send").addEventListener("click", () => {
-  const t = L(), need = {table:["in-table"], pickup:["in-name"], delivery:["in-name","in-addr"]}[orderType];
+  const t = L(), need = {table:["in-table"], pickup:["in-name"], delivery: myLoc ? ["in-name"] : ["in-name","in-addr"]}[orderType];
   let ok = true; need.forEach(id => { const el = document.getElementById(id); if (!el.value.trim()){ el.parentElement.classList.add("bad"); ok = false; } });
   if (!ok){ $("#c-hint").textContent = t.need; return; }
   const v = id => document.getElementById(id).value.trim();
@@ -489,7 +494,7 @@ $("#c-send").addEventListener("click", () => {
     lines.push(`${q} × ${base}${op.o ? " - " + (lang==="tr" ? `${optTr(op.o)} (${op.o})` : op.o) : ""} = ${money(op.p*q)}`); });
   lines.push("", `*${t.msgTotal}: ${money(sum())}*`, `${t.msgType}: ${t.types[orderType]}`);
   if (orderType==="table") lines.push(`${t.msgTable}: ${v("in-table")}`); else lines.push(`${t.msgName}: ${v("in-name")}`);
-  if (orderType==="delivery") lines.push(`${t.msgAddr}: ${v("in-addr")}`);
+  if (orderType==="delivery" && v("in-addr")) lines.push(`${t.msgAddr}: ${v("in-addr")}`);if (orderType==="delivery" && myLoc) lines.push(`${t.msgLoc}: https://www.google.com/maps?q=${myLoc.lat},${myLoc.lng}`);
   if (v("in-note")) lines.push(`${t.msgNote}: ${v("in-note")}`);
   const a = document.createElement("a");
   a.href = `https://wa.me/${S.wa.replace(/\D/g,"")}?text=${encodeURIComponent(lines.join("\n"))}`; a.target = "_blank"; a.rel = "noopener";
@@ -511,6 +516,16 @@ const qi = $("#q"), clr = $("#clear");
 qi.addEventListener("input", () => { clr.hidden = !qi.value; render(qi.value); });
 clr.addEventListener("click", () => { qi.value = ""; clr.hidden = true; render(""); qi.focus(); });
 document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => { lang = b.dataset.lang; store.set("lang", lang); applyLang(); }));
+$("#get-loc").addEventListener("click", () => {
+  const t = L(), b = $("#get-loc");
+  if (!navigator.geolocation){ $("#c-hint").textContent = t.locFail; return; }
+  b.textContent = t.locWait; b.disabled = true;
+  navigator.geolocation.getCurrentPosition(
+    p => { myLoc = {lat:p.coords.latitude.toFixed(6), lng:p.coords.longitude.toFixed(6)}; b.disabled = false; drawCart(); },
+    () => { myLoc = null; b.disabled = false; drawCart(); $("#c-hint").textContent = t.locFail; },
+    {enableHighAccuracy:true, timeout:12000, maximumAge:0}
+  );
+});  
 
 /* ============ Hours ============ */
 function hm(s){ const m = String(s||"").match(/(\d{1,2})[:.](\d{2})/); return m ? (+m[1])*60 + (+m[2]) : null; }
